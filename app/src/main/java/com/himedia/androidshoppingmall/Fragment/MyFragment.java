@@ -89,7 +89,7 @@ public class MyFragment extends Fragment {
 
         withdrawal = view.findViewById(R.id.withdrawalTv);   // 회원탈퇴
         logout = view.findViewById(R.id.logoutTv);
-        cancel = view.findViewById(R.id.cancelTv);
+    //    cancel = view.findViewById(R.id.cancelTv);
         modifyOk   = view.findViewById(R.id.modifyOkTv);
 
         // Activity/Fragment -> Fragment 보낸 인자 받기
