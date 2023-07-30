@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="1900dp"
     android:orientation="vertical"
     tools:context=".Fragment.ProductDetailsFragment">
 
@@ -141,7 +141,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,8 +159,7 @@
             <ImageView
                 android:id="@+id/imageViewOrign"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:src="@tools:sample/avatars" />
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -169,7 +168,7 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <ImageView
