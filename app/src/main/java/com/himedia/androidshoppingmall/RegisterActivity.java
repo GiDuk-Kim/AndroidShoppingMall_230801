@@ -191,16 +191,6 @@ public class RegisterActivity extends AppCompatActivity {
         builder.show();
     }
 
-    /*
-    private boolean isDuplicateId() {
-        String dbId = dbHelper.getUserId(String.valueOf(id.getText()));
-
-        if(dbId.isEmpty()) {
-            return false;
-        }
-        return true;
-    }
-*/
     private boolean isCorreectPw() {
         String pwValue = String.valueOf(pw.getText());
         String pwChkValue = String.valueOf(pwChk.getText());
