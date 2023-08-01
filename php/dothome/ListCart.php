@@ -6,7 +6,7 @@
     $member_id = isset($_POST["member_id"]) ? $_POST["member_id"] : "";   
     //$member_id = isset($_GET["member_id"]) ? $_GET["member_id"] : "";
 
-    $sql  = "select t.* from( select g.goods_id,g.goods_title,g.goods_price,d.fileName,c.cart_goods_qty from t_shopping_goods g, t_goods_detail_image d, t_shopping_cart c where g.goods_id=d.goods_id and g.goods_id=c.goods_id and g.goods_del_yn='N' and d.filetype='main_image' and c.member_id=? order by c.cart_id desc ) t; ";    
+    $sql  = "select t.* from( select g.goods_id,g.goods_title,g.goods_price,d.fileName,c.cart_goods_qty,c.cart_id from t_shopping_goods g, t_goods_detail_image d, t_shopping_cart c where g.goods_id=d.goods_id and g.goods_id=c.goods_id and g.goods_del_yn='N' and d.filetype='main_image' and c.member_id=? order by c.cart_id desc ) t; ";    
    
     $statement = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param($statement, "s", $member_id );  // ss 는 string string,  si는 string int 의미임  
@@ -14,7 +14,7 @@
 
 
     mysqli_stmt_store_result($statement);
-    mysqli_stmt_bind_result($statement, $goods_id, $goods_title, $goods_price, $fileName, $cart_goods_qty);
+    mysqli_stmt_bind_result($statement, $goods_id, $goods_title, $goods_price, $fileName, $cart_goods_qty, $cart_id);
 
     $result = array();
     $response = array();
@@ -27,6 +27,7 @@
         $result["goods_price"] = $goods_price;   
         $result["fileName"] = $fileName;   
         $result["cart_goods_qty"] = $cart_goods_qty;
+        $result["cart_id"] = $cart_id;
         $response[] = $result;          
     }
 

@@ -32,21 +32,24 @@
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="200dp"
 
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="8dp" />
 
-                <Button
+                <TextView
                     android:id="@+id/btnDelCart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="5dp"
-                    android:ems="2"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="삭제" />
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="삭제"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/infoTv" />
 
             </LinearLayout>
 
@@ -67,8 +70,9 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="#ff000000" />
+                    android:maxLines="1"
+                    android:textColor="#ff000000"
+                    android:textSize="18sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

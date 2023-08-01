@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.himedia.androidshoppingmall.Data.Constants;
 import com.himedia.androidshoppingmall.Data.PreferenceManager;
 import com.himedia.androidshoppingmall.Data.ProductBean;
 import com.himedia.androidshoppingmall.R;
@@ -20,7 +21,6 @@ import com.himedia.androidshoppingmall.Recycler.OnCartItemClickListener;
 
 import java.util.ArrayList;
 public class CartFragment extends Fragment {
-    private static final String SERVER_URL = "http://3.37.214.236:8080";
     private View view;
     private Bundle bundle;
 
@@ -55,7 +55,7 @@ public class CartFragment extends Fragment {
         ArrayList<String[]> data = (ArrayList<String[]>) args.getSerializable("data");
 
 
-        String imgUrlPath = SERVER_URL + "/resources/image/file_repo/";
+        String imgUrlPath = Constants.IMAGES_URL;
         recyclerView = view.findViewById(R.id.recyclerView);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(layoutManager);

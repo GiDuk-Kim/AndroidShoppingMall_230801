@@ -1,0 +1,40 @@
+1.안드로이드 자바 버튼에 값 할당
+
+Button button = (Button) findViewById(R.id.button);
+button.setTag("key");
+
+
+2.할당 된 값 가져오기
+
+
+Button button = (Button) findViewById(R.id.button);
+String key = (String) button.getTag();
+이 코드는 button에 할당된 키값을 가져와서 String 타입으로 변환하여 key 변수에 저장합니다.
+
+
+
+3.안드로이 자바에 버튼에 배열값 할당하는 법
+
+안녕하세요. 안드로이드 자바에서 Button button = findViewById(R.id.button):에서  button.setTga 에 a 와 b 또는 c배열을 할당하는 법은 다음과 같습니다.
+
+Button button = (Button) findViewById(R.id.button);
+button.setTag(new String[]{"a", "b", "c"});
+이 코드는 button에 String 배열을 할당합니다. button에 배열을 할당하면, button을 click할 때 배열의 요소를 사용하여 이벤트를 처리할 수 있습니다.
+
+예를 들어, 다음 코드는 button을 click할 때 배열의 요소를 출력합니다.
+
+Button button = (Button) findViewById(R.id.button);
+button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        String[] tags = (String[]) v.getTag();
+        for (String tag : tags) {
+            System.out.println(tag);
+        }
+    }
+});
+이 코드는 button을 click할 때 다음과 같은 출력을 생성합니다.
+
+a
+b
+c

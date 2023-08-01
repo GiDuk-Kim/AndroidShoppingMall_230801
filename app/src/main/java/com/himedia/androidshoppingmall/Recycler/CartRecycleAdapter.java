@@ -54,8 +54,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
         ProductBean item = items.get(position);
         viewHolder.setItem(item);
     }
-
-
+    
     @Override
     public int getItemCount() {
         return items.size();
@@ -115,7 +114,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
         }
 
         public void setItem(ProductBean item) {
-            textView1.setText(String.valueOf(item.getGoods_qty())); // goods_qty    // 230727 오류발생
+            textView1.setText(String.valueOf(item.getGoods_qty())); // goods_qty    // 230727 오류발생(43~46 오류떄문)
             textView2.setText(item.getGoods_title());                // goods_title
             textView4.setText(String.valueOf(item.getGoods_price()));     // goods_price
             Glide.with(itemView.getContext()).load(item.getImageRes()).into(imageView1);
