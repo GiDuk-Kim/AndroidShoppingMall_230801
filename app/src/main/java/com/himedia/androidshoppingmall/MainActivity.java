@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_2:
                     showMyCart(member_id);
-                  //  transaction.replace(R.id.frameLayout, cartFragment).commit();
                     toolbar.setTitle("장바구니");
                     drawer.closeDrawers();
                     break;
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.nav_cart:
                     showMyCart(member_id);
-                    //transaction.replace(R.id.frameLayout, cartFragment).commitAllowingStateLoss();
                     toolbar.setTitle("장바구니");
                     break;
 
@@ -294,14 +292,16 @@ public class MainActivity extends AppCompatActivity {
                             String goods_price_comma = String.format(Locale.US, "%,d", Integer.parseInt(goods_price));
                             String fileName = jsonObject.getString("fileName");        // 상품이미지명
                             String cart_goods_qty = jsonObject.getString("cart_goods_qty");  // 장바구니 수량
+                            String cart_id = jsonObject.getString("cart_id"); // 장바구니 key
 
                             if (fileName != null) {
-                                String[] row = new String[5];
+                                String[] row = new String[6];
                                 row[0] = goods_id;
                                 row[1] = goods_title;
                                 row[2] = goods_price_comma;
                                 row[3] = fileName;
                                 row[4] = cart_goods_qty;
+                                row[5] = cart_id;
                                 data.add(row);
                             }
                         }

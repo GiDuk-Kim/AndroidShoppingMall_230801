@@ -126,7 +126,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(ProductAdapter.ViewHolder holder, View view, int position) {
                 ProductBean item = productAdapter.getItem(position);
-                Toast.makeText(getContext(), "선택된 제품 : " + item.getGoods_title(), Toast.LENGTH_LONG).show();
+            //    Toast.makeText(getContext(), "선택된 제품 : " + item.getGoods_title(), Toast.LENGTH_SHORT).show();
                 String goods_id = String.valueOf (item.getGoods_id());
 
                 showProductDetail(goods_id); /* 상품상세페이지 */

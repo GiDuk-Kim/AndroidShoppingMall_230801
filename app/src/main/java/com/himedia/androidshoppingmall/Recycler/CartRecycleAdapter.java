@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.himedia.androidshoppingmall.Data.ProductBean;
+import com.himedia.androidshoppingmall.Data.CartBean;
 import com.himedia.androidshoppingmall.R;
 
 import java.util.ArrayList;
 
 public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.ViewHolder>
         implements OnCartItemClickListener {
-    ArrayList<ProductBean> items = new ArrayList();
+    ArrayList<CartBean> items = new ArrayList();
 
     OnCartItemClickListener listener;
 
@@ -29,7 +29,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
         this.listener = listener;
     }
 
-    TextView textView1,textView2,textView4;
+    TextView textView1,textView2,textView4, btnDelCart;
     ImageView imageView1;
 
     @NonNull
@@ -51,7 +51,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        ProductBean item = items.get(position);
+        CartBean item = items.get(position);
         viewHolder.setItem(item);
     }
     
@@ -60,19 +60,24 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
         return items.size();
     }
 
-    public void addItem(ProductBean item) {
+    public void addItem(CartBean item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<ProductBean> items) {
+    public void setItems(ArrayList<CartBean> items) {
         this.items = items;
     }
 
-    public ProductBean getItem(int position) {
+    public CartBean getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, ProductBean item) {
+    // 장바구니 삭제 기능 추가 by Dean 20230801
+    public void removeItem(int position) {
+        items.remove(position);         // 삭제할 항목을 제거합니다.
+    }
+
+    public void setItem(int position, CartBean item) {
         items.set(position, item);
     }
 
@@ -91,6 +96,8 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
         TextView textView4;
         ImageView imageView1;
 
+        TextView btnDelCart;
+
         public ViewHolder(View itemView, OnCartItemClickListener listener) {    // final OnProdu ....
             super(itemView);
 
@@ -100,6 +107,8 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
             textView4 = itemView.findViewById(R.id.textView4);
 
             imageView1 = itemView.findViewById(R.id.imageView1);
+
+            btnDelCart = itemView.findViewById(R.id.btnDelCart);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,11 +122,12 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
             });
         }
 
-        public void setItem(ProductBean item) {
+        public void setItem(CartBean item) {
             textView1.setText(String.valueOf(item.getGoods_qty())); // goods_qty    // 230727 오류발생(43~46 오류떄문)
             textView2.setText(item.getGoods_title());                // goods_title
             textView4.setText(String.valueOf(item.getGoods_price()));     // goods_price
             Glide.with(itemView.getContext()).load(item.getImageRes()).into(imageView1);
+            btnDelCart.setTag(item.getCart_id());
         }
 
     }
