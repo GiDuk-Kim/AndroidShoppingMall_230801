@@ -11,9 +11,11 @@
         <item>70대이상</item>
     </string-array>
 
-    <string-array name="type">
-        <item>Top</item>
-        <item>Bottom</item>
-        <item>Acc</item>
+    <string-array name="category">
+        <item>화환</item>
+        <item>관상</item>
+        <item>기능성</item>
+        <item>꽃배달</item>
+        <item>부가제품</item>
     </string-array>
 </resources>

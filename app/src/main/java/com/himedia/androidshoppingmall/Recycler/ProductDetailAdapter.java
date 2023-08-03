@@ -15,11 +15,11 @@ import com.himedia.androidshoppingmall.R;
 import java.util.ArrayList;
 
 public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdapter.ViewHolder>
-        implements OnProductItemClickListener {
+        implements ProductItemClickListener {
 
     ArrayList<ProductDetailBean> items = new ArrayList();
 
-    OnProductItemClickListener listener;
+    ProductItemClickListener listener;
 
     @NonNull
     @Override
@@ -67,14 +67,15 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
 
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView1;
 
-        public ViewHolder(View itemView, final OnProductItemClickListener listener) {
+        public ViewHolder(View itemView, final ProductItemClickListener listener) {
             super(itemView);
 
             imageView1 = itemView.findViewById(R.id.imageView1);
             // Set the listener for the item click
+
         }
 
         public void setItem(ProductDetailBean item) {

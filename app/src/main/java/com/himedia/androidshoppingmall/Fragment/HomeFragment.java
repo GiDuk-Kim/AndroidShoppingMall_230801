@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -20,9 +19,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.himedia.androidshoppingmall.Data.Constants;
 import com.himedia.androidshoppingmall.Data.ProductBean;
 import com.himedia.androidshoppingmall.R;
-import com.himedia.androidshoppingmall.Recycler.OnProductItemClickListener;
+import com.himedia.androidshoppingmall.Recycler.ProductItemClickListener;
 import com.himedia.androidshoppingmall.Recycler.ProductAdapter;
 import com.himedia.androidshoppingmall.Request.ProductDetailRequest;
 
@@ -35,7 +35,6 @@ import java.util.Locale;
 
 //import com.himedia.androidshoppingmall.Recycler.ProductAdapter;
 public class HomeFragment extends Fragment {
-    private static final String SERVER_URL = "http://3.37.214.236:8080";
     private static final int INTERVAL_TIME = 3800;  // 메인 슬라이드 이미지 시간 간격 3.8초
 
     private View view;
@@ -46,9 +45,6 @@ public class HomeFragment extends Fragment {
 
     RecyclerView recyclerView;
     ProductAdapter productAdapter;
-    
- //   ProductDetailsFragment productDetailsFragment;   // 상품 상세페이지 처리 by Dean
-    ProductDetailRequest productDetailRequest;    // 상품상세설명 json으로 데이터 가져오는 기능
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +75,7 @@ public class HomeFragment extends Fragment {
 
     // URL 경로 이미지를 가져와서 출력하는 방식으로 변경 By Dean
     private void flipperImagesFromUrl(int idx) {
-        String url = SERVER_URL + "/resources/image/banner"+idx+".png";  // banner2.png"
+        String url = Constants.MAIN_BANNER_URL + "/banner"+idx+".png";  // banner2.png"
         ImageView imageView = new ImageView(getContext());
         Glide.with(this).load(url).into(imageView);
 
@@ -108,7 +104,7 @@ public class HomeFragment extends Fragment {
         Bundle args = getArguments();
         ArrayList<String[]> data = (ArrayList<String[]>) args.getSerializable("data");
 
-        String imgUrlPath = SERVER_URL + "/resources/image/file_repo/";
+        String imgUrlPath = Constants.IMAGES_URL;
         recyclerView = view.findViewById(R.id.recyclerView);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
@@ -122,7 +118,7 @@ public class HomeFragment extends Fragment {
         }
 
         recyclerView.setAdapter(productAdapter);
-        productAdapter.setOnItemClickListener(new OnProductItemClickListener() {
+        productAdapter.setOnItemClickListener(new ProductItemClickListener() {
             @Override
             public void onItemClick(ProductAdapter.ViewHolder holder, View view, int position) {
                 ProductBean item = productAdapter.getItem(position);

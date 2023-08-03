@@ -28,6 +28,7 @@ import com.himedia.androidshoppingmall.Fragment.ShopFragment;
 import com.himedia.androidshoppingmall.Request.CartListRequest;
 import com.himedia.androidshoppingmall.Request.HomeRequest;
 import com.himedia.androidshoppingmall.Request.MyPageRequest;
+import com.himedia.androidshoppingmall.Request.ShopRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     drawer.closeDrawers();   // 바로가기 메뉴 창 닫기
                     break;
                 case R.id.nav_1:
-                    transaction.replace(R.id.frameLayout, shopFragment).commit();
+                    showShopProduct("all");  // 쇼핑 홈
                     toolbar.setTitle("쇼핑 홈");
                     drawer.closeDrawers();
                     break;
@@ -130,13 +131,13 @@ public class MainActivity extends AppCompatActivity {
 
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    showMainProduct ("bestseller");  // 베스트 셀러 상품
+                    showMainProduct("bestseller");  // 베스트 셀러 상품
               //      transaction.replace(R.id.frameLayout, homeFragment).commitAllowingStateLoss();
                     toolbar.setTitle("홈페이지");
                     break;
 
                 case R.id.nav_shop:
-                    transaction.replace(R.id.frameLayout, shopFragment).commitAllowingStateLoss();
+                    showShopProduct("all");  // 쇼핑 홈
                     toolbar.setTitle("쇼핑 홈");
                     break;
 
@@ -211,6 +212,60 @@ public class MainActivity extends AppCompatActivity {
         HomeRequest homeRequest = new HomeRequest(goodsStatus, responseListener);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(homeRequest);
+    }
+
+    public void showShopProduct(String category) {
+        Bundle bundle = new Bundle();
+        ArrayList<String[]> data = new ArrayList<>();
+        //EditText에 현재 입력되어 있는 값을 가져온다.
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // activity/fragment -> fragment 값 전달
+                try {
+                    JSONArray jsonArray = new JSONArray(response);   // 여러개의 RECORDS 가져옴
+
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        boolean success = jsonObject.getBoolean("success");  // true/false
+
+                        if ( success  ) {
+                            String goods_id = jsonObject.getString("goods_id");       // 상품코드
+                            String goods_title = jsonObject.getString("goods_title");    // 상품명
+                            String goods_price = jsonObject.getString("goods_price");  // 상품가격
+                            // 숫자에 콤마 추가
+                            String goods_price_comma = String.format(Locale.US, "%,d", Integer.parseInt(goods_price));
+                            String fileName = jsonObject.getString("fileName");        // 상품이미지명
+                            String goods_sort = jsonObject.getString("goods_sort");  // 카테고리
+
+                            if (fileName != null) {
+                                String[] row = new String[5];
+                                row[0] = goods_id;
+                                row[1] = goods_title;
+                                row[2] = goods_price_comma;
+                                row[3] = fileName;
+                                row[4] = goods_sort;
+                                data.add(row);
+                            }
+                        }
+                    }
+                    //   Toast.makeText(getApplicationContext(), "실서버 접속에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                    bundle.putStringArrayList("data", (ArrayList) data);
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    ShopFragment shopFragment = new ShopFragment();
+                    shopFragment.setArguments(bundle);
+                    transaction.replace(R.id.frameLayout, shopFragment).commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        ShopRequest shopRequest = new ShopRequest(category,responseListener);
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        queue.add(shopRequest);
     }
 
     public void showMyPage(String member_id) {

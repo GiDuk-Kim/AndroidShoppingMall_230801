@@ -16,16 +16,16 @@ import com.himedia.androidshoppingmall.R;
 import java.util.ArrayList;
 
 public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.ViewHolder>
-        implements OnCartItemClickListener {
+        implements CartItemClickListener {
     ArrayList<CartBean> items = new ArrayList();
 
-    OnCartItemClickListener listener;
+    CartItemClickListener listener;
 
-    public OnCartItemClickListener getListener() {
+    public CartItemClickListener getListener() {
         return listener;
     }
 
-    public void setListener(OnCartItemClickListener listener) {
+    public void setListener(CartItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -89,16 +89,16 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView1;
         TextView textView2;
         TextView textView3;
         TextView textView4;
         ImageView imageView1;
 
-        TextView btnDelCart;
+    //    TextView btnDelCart;
 
-        public ViewHolder(View itemView, OnCartItemClickListener listener) {    // final OnProdu ....
+        public ViewHolder(View itemView, CartItemClickListener listener) {    // final OnProdu ....
             super(itemView);
 
             textView1 = itemView.findViewById(R.id.textView1);   // 수량
@@ -108,7 +108,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
 
             imageView1 = itemView.findViewById(R.id.imageView1);
 
-            btnDelCart = itemView.findViewById(R.id.btnDelCart);
+      //      btnDelCart = itemView.findViewById(R.id.btnDelCart);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,8 +126,8 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartRecycleAdapter.
             textView1.setText(String.valueOf(item.getGoods_qty())); // goods_qty    // 230727 오류발생(43~46 오류떄문)
             textView2.setText(item.getGoods_title());                // goods_title
             textView4.setText(String.valueOf(item.getGoods_price()));     // goods_price
-            Glide.with(itemView.getContext()).load(item.getImageRes()).into(imageView1);
-            btnDelCart.setTag(item.getCart_id());
+            Glide.with(itemView.getContext()).load(item.getImageRes()).into(imageView1);  //fileName
+       //     btnDelCart.setTag(item.getCart_id());
         }
 
     }

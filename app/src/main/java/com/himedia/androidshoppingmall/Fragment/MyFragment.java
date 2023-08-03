@@ -273,7 +273,7 @@ public class MyFragment extends Fragment {
 
                     if ( success )
                     {
-                        Toast.makeText(getContext(),"회원을 수정하였습니다.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"회원정보를 수정하였습니다.",Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

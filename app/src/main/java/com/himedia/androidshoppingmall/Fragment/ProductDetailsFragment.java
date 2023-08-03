@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.himedia.androidshoppingmall.Data.Constants;
 import com.himedia.androidshoppingmall.Data.PreferenceManager;
 import com.himedia.androidshoppingmall.LoginActivity;
 import com.himedia.androidshoppingmall.R;
@@ -26,6 +27,7 @@ import com.himedia.androidshoppingmall.Request.CartRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class ProductDetailsFragment extends Fragment {
@@ -39,11 +41,6 @@ public class ProductDetailsFragment extends Fragment {
     private PreferenceManager pManager;
     private int goods_id;
 
-    private static final String SERVER_URL = "http://3.37.214.236:8080";
-   // private static final String SERVER_URL = "http://gdkgate.dothome.co.kr";  // 테스트 서버
-
-
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +57,6 @@ public class ProductDetailsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_product_details, container, false);
 
         showProductDetail(); // 상품 상세페이지 보기
-
-
         // Inflate the layout for this fragment
         return view;
     }
@@ -69,7 +64,7 @@ public class ProductDetailsFragment extends Fragment {
     private void showProductDetail() {
         Bundle args = getArguments();
         ArrayList<String[]> data = (ArrayList<String[]>) args.getSerializable("data");
-        String imgUrlPath = SERVER_URL + "/resources/image/file_repo/";
+
         pManager = new PreferenceManager();  // 로그인후 토큰이 만들어져 자동 로그인 기능
 
         String member_id = pManager.getString(getContext(), "member_id");
@@ -117,7 +112,7 @@ public class ProductDetailsFragment extends Fragment {
                     queue.add(cartRequest);
                 }
                 else{
-                    Toast.makeText(getContext(), "서버와 연결이 끝어졌습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "서버와 연결이 끊어졌습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show();
                     //  Fragment -> Activity 이동 : MyFragment ->  MainActivity 로 넘어가게 한다.
                     Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
@@ -132,7 +127,20 @@ public class ProductDetailsFragment extends Fragment {
     //    recyclerView.setLayoutManager(layoutManager);  // 오류
     //    productDetailAdapter = new ProductDetailAdapter();
 
+       textView2.setText(data.get(0)[1]);   // 상품명
+       textView4.setText(data.get(0)[2]);   // 가격
+       String imgUrl = Constants.IMAGES_URL + "500/원산지.png";   //상품산지정보
+       Glide.with(view.getContext()).load(imgUrl).into(imageViewOrign);
+       imgUrl  = Constants.IMAGES_URL + data.get(0)[0] + "/" + data.get(0)[3];    // 상품코드/상품명이미지1
+       Glide.with(view.getContext()).load(imgUrl).into(imageView1);
+       imgUrl  = Constants.IMAGES_URL + data.get(1)[0] + "/" + data.get(1)[3];
+       Glide.with(view.getContext()).load(imgUrl).into(imageView2);
+       imgUrl  = Constants.IMAGES_URL + data.get(2)[0] + "/" + data.get(2)[3];
+       Glide.with(view.getContext()).load(imgUrl).into(imageView3);
+       imgUrl  = Constants.IMAGES_URL + data.get(3)[0] + "/" + data.get(3)[3];
+       Glide.with(view.getContext()).load(imgUrl).into(imageView4);
 
+      /*  상품 상세 페이지  상품명 이미지 상품상세이미지 1, 2, 3 출력  by Dean 230731
        for (int i = 0; i < data.size(); i++) {
             String[] row = data.get(i);
             String imgUrl  = imgUrlPath + row[0] + "/" + row[3];
@@ -155,23 +163,13 @@ public class ProductDetailsFragment extends Fragment {
                     Glide.with(view.getContext()).load(imgUrl).into(imageView4);
                     break;
             }
-     //       productDetailAdapter.addItem(new ProductDetailBean(imgUrl));
-            imgUrl = SERVER_URL + "/resources/image/file_repo/500/원산지.png";
+
+            imgUrl = Constants.IMAGES_URL + "500/원산지.png";
             Glide.with(view.getContext()).load(imgUrl).into(imageViewOrign);
         }
-            // 폼 교체 반복되는 이미지(상품 상세페이지 )
-
-            // 폼 교체 반복 종료
+        */
 
 
-/*
-        for (int i = 1; i < data.size(); i++) {
-            String[] row = data.get(i);
-            String imgUrl  = imgUrlPath + row[0] + "/" + row[3];
-            productDetailAdapter.addItem(new ProductDetailBean(imgUrl));
-        }
-*/
-//        recyclerView.setAdapter(productDetailAdapter);
     }
 
 }

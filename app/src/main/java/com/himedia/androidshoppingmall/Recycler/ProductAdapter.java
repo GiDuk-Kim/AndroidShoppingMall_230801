@@ -16,10 +16,10 @@ import com.himedia.androidshoppingmall.R;
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>
-                            implements OnProductItemClickListener {
+                            implements ProductItemClickListener {
     ArrayList<ProductBean> items = new ArrayList();
 
-    OnProductItemClickListener listener;
+    ProductItemClickListener listener;
 
     @NonNull
     @Override
@@ -57,7 +57,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         items.set(position, item);
     }
 
-    public void setOnItemClickListener(OnProductItemClickListener listener) {
+    public void setOnItemClickListener(ProductItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -68,7 +68,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView1;
         TextView textView2;
         TextView textView3;
@@ -76,7 +76,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         ImageView imageView1;
 
-        public ViewHolder(View itemView, OnProductItemClickListener listener) {    // final OnProdu ....
+        public ViewHolder(View itemView, ProductItemClickListener listener) {    // final OnProdu ....
             super(itemView);
 
             textView1 = itemView.findViewById(R.id.textView1);

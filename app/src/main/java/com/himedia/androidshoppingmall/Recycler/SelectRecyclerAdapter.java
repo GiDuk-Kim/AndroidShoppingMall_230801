@@ -12,9 +12,9 @@ import com.himedia.androidshoppingmall.R;
 
 public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAdapter.SelectViewHolder> {
     private String[] data;
-    private ItemClickListener listener;
+    private SelectItemClickListener listener;
 
-    public SelectRecyclerAdapter(String[] data, ItemClickListener listener){
+    public SelectRecyclerAdapter(String[] data, SelectItemClickListener listener){
         this.data = data;
         this.listener = listener;
     }
@@ -28,15 +28,16 @@ public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull SelectViewHolder selectViewHolder, int i) {
-        selectViewHolder.typeSelect.setText(data[i]);
+        selectViewHolder.categorySelect.setText(data[i]);
 
-        /* 오류로 주석처리 by Dean
         final int index = i;
-        selectViewHolder.typeSelect.setOnClickListener(v ->{
-            listener.onItemClick(v, index);
+        selectViewHolder.categorySelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
         });
 
-         */
     }
 
     @Override
@@ -48,12 +49,12 @@ public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAd
     }
 
     public class SelectViewHolder extends RecyclerView.ViewHolder{
-        TextView typeSelect;
+        TextView categorySelect;
 
         public SelectViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            typeSelect = itemView.findViewById(R.id.typeSelectTv);
+            categorySelect = itemView.findViewById(R.id.categorySelectTv);
         }
     }
 }

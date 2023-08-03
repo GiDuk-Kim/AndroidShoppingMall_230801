@@ -21,7 +21,7 @@ import com.himedia.androidshoppingmall.Data.Constants;
 import com.himedia.androidshoppingmall.Data.PreferenceManager;
 import com.himedia.androidshoppingmall.R;
 import com.himedia.androidshoppingmall.Recycler.CartRecycleAdapter;
-import com.himedia.androidshoppingmall.Recycler.OnCartItemClickListener;
+import com.himedia.androidshoppingmall.Recycler.CartItemClickListener;
 import com.himedia.androidshoppingmall.Request.CartDelRequest;
 
 import org.json.JSONException;
@@ -77,7 +77,7 @@ public class CartFragment extends Fragment {
 
         recyclerView.setAdapter(cartRecycleAdapter);
 
-        cartRecycleAdapter.setListener(new OnCartItemClickListener() {
+        cartRecycleAdapter.setListener(new CartItemClickListener() {
             @Override
             public void onItemClick(CartRecycleAdapter.ViewHolder viewHolder, View view, int position) {
                 CartBean item = cartRecycleAdapter.getItem(position);
