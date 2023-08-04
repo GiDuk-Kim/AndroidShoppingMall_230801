@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.himedia.androidshoppingmall.Data.Constants;
 import com.himedia.androidshoppingmall.Data.ProductBean;
+import com.himedia.androidshoppingmall.MainActivity;
 import com.himedia.androidshoppingmall.R;
 import com.himedia.androidshoppingmall.Recycler.ProductAdapter;
 import com.himedia.androidshoppingmall.Recycler.ProductItemClickListener;
@@ -38,7 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ShopFragment extends Fragment  implements AdapterView.OnItemClickListener {
+public class ShopFragment  extends Fragment {
     private Bundle bundle;
     private View view;
     private RecyclerView recyclerView;
@@ -46,7 +46,8 @@ public class ShopFragment extends Fragment  implements AdapterView.OnItemClickLi
     private String[] tData;
     private ShopRecyclerAdapter shopRecyclerAdapter;
     private ArrayList<String[]> pData;
-    private SelectItemClickListener listener;
+    private SelectItemClickListener selectListener;
+    private ShopItemClickListener listener;
 
     private ProductAdapter productAdapter;
 
@@ -64,8 +65,8 @@ public class ShopFragment extends Fragment  implements AdapterView.OnItemClickLi
         view = inflater.inflate(R.layout.activity_shop_fragment, container, false);
 
         showCategorySelecter();
-        showShop();
-    //    showShop2();
+        showShop();     //　디자인 1
+    //    showShop2();  // 디자인 2
 
         return view;
     }
@@ -77,11 +78,20 @@ public class ShopFragment extends Fragment  implements AdapterView.OnItemClickLi
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView = view.findViewById(R.id.categorySelectRecycler);
         recyclerView.setLayoutManager(layoutManager);
-        tAdapter = new SelectRecyclerAdapter(tData,listener);
+        tAdapter = new SelectRecyclerAdapter(tData,selectListener);
         recyclerView.setAdapter(tAdapter);
+
+        // 카테고리 클릭이벤트 수정 시작
+        tAdapter.setOnCategoryClickListener(new SelectItemClickListener() {
+            @Override
+            public void onSelectItemClick(SelectRecyclerAdapter.SelectViewHolder holder, View view, int position) {
+                String category = String.valueOf(((TextView)(view.findViewById(R.id.categorySelectTv))).getText());
+          //      Toast.makeText(getContext(), "카테고리 :" + category , Toast.LENGTH_SHORT).show();
+                showProductByCategory(category);
+            }
+        });
+        // 카테고리 클릭 이벤트 수정 끝
     }
-
-
 
     private void showShop() {
         Bundle args = getArguments();
@@ -116,27 +126,20 @@ public class ShopFragment extends Fragment  implements AdapterView.OnItemClickLi
 
     }
 
-
-    private void showProduct(String category) {
+    private void showProductByCategory(String category) {
         pData.clear();
   //      pData = dbHelper.getProductbyType(type);
   //      shopRecyclerAdapter.updateData(pData);
-    }
 
-    public void onItemClick(View v, int position) {
-        String category = String.valueOf(((TextView)(v.findViewById(R.id.categorySelectTv))).getText());
-
-        showProduct(category);
-    }
-
-//    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //
+        // Get the MainActivity instance
+        MainActivity activity = (MainActivity) getActivity();
+        // Call the doSomething() method
+        activity.showShopProduct(category);  // 쇼핑 홈
     }
 
     private void showShop2() {
         Bundle args = getArguments();
-        ArrayList<String[]> data = (ArrayList<String[]>) args.getSerializable("data");
+        pData = (ArrayList<String[]>) args.getSerializable("data");
 
         String imgUrlPath = Constants.IMAGES_URL;
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -145,8 +148,8 @@ public class ShopFragment extends Fragment  implements AdapterView.OnItemClickLi
         recyclerView.setLayoutManager(layoutManager);
         productAdapter = new ProductAdapter();
 
-        for (int i = 0; i < data.size(); i++) {
-            String[] row = data.get(i);
+        for (int i = 0; i < pData.size(); i++) {
+            String[] row = pData.get(i);
             String imgUrl  = imgUrlPath + row[0] + "/" + row[3];
             productAdapter.addItem(new ProductBean(row[0],row[1],row[2],imgUrl));
         }
@@ -221,5 +224,4 @@ public class ShopFragment extends Fragment  implements AdapterView.OnItemClickLi
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(productDetailRequest);
     }
-
 }

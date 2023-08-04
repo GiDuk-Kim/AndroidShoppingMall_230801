@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -22,8 +23,8 @@ import com.bumptech.glide.Glide;
 import com.himedia.androidshoppingmall.Data.Constants;
 import com.himedia.androidshoppingmall.Data.ProductBean;
 import com.himedia.androidshoppingmall.R;
-import com.himedia.androidshoppingmall.Recycler.ProductItemClickListener;
 import com.himedia.androidshoppingmall.Recycler.ProductAdapter;
+import com.himedia.androidshoppingmall.Recycler.ProductItemClickListener;
 import com.himedia.androidshoppingmall.Request.ProductDetailRequest;
 
 import org.json.JSONArray;
@@ -109,6 +110,7 @@ public class HomeFragment extends Fragment {
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
+
         productAdapter = new ProductAdapter();
 
         for (int i = 0; i < data.size(); i++) {

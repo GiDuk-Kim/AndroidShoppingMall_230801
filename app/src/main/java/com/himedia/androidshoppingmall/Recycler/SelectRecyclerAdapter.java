@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.himedia.androidshoppingmall.R;
 
-public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAdapter.SelectViewHolder> {
+public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAdapter.SelectViewHolder>
+        implements SelectItemClickListener {
     private String[] data;
     private SelectItemClickListener listener;
 
@@ -19,10 +20,19 @@ public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAd
         this.listener = listener;
     }
 
+    public void setOnCategoryClickListener(SelectItemClickListener listener) {
+        this.listener = listener;
+    }
+   public void onSelectItemClick(SelectRecyclerAdapter.SelectViewHolder holder, View view, int position) {
+       if (listener != null) {
+           listener.onSelectItemClick(holder, view, position);
+       }
+   }
+
     @NonNull
     @Override
     public SelectViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_select_type_card, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_select_category_card, viewGroup, false);
         return new SelectViewHolder(view);
     }
 
@@ -34,10 +44,11 @@ public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAd
         selectViewHolder.categorySelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (listener != null) {
+                    listener.onSelectItemClick(selectViewHolder,view,index);
+                }
             }
         });
-
     }
 
     @Override
@@ -57,4 +68,9 @@ public class SelectRecyclerAdapter extends RecyclerView.Adapter<SelectRecyclerAd
             categorySelect = itemView.findViewById(R.id.categorySelectTv);
         }
     }
+
+    public String getItem(int position) {
+        return data[position];
+    }
+
 }
